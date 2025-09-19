@@ -10,23 +10,23 @@
 
 <body>
     <h1>FORMULARIO SUPER<strong>AÇAI</strong>AJIN</h1>
-    <form method="post" action="principal.html">
+    <form method="post" action="principal.html" onsubmit="return validarCheckboxes()">
         <fieldset>
             <legend>
                 Dados pessoais:
             </legend>
-            <label>Nome: <p></p><input type="text" required onchange="mudarEstado(this.value)"></label>
+            <label>Nome: <p></p><input type="text" required onchange="mudarEstado(this.value)" name="nome" id="nome"></label>
             <p></p>
-            <label>Idade:<p></p><input type="number" required></label>
+            <label>Idade:<p></p><input type="number" required name="idade" id="idade"></label>
             <p></p>
-            <label>Telefone:<p></p><input type="tel" required></label>
+            <label>Telefone:<p></p><input type="tel" required name="celular" id="celular"></label>
             <p></p>
-            <label>Endereço:<p></p><input type="text" required onchange="mudarEstado(this.value)"></label>
+            <label>Endereço:<p></p><input type="text" required onchange="mudarEstado(this.value)" name="endereco" id="endereco"></label>
             <p></p>
             <label>Planeta de Origem:
                 <br>
                 <br>
-                <select required>
+                <select required name="origem" name="origem">
                     <option>Planeta Terra</option>
                     <option>Planeta Namek</option>
                     <option>Planeta Vegeta</option>
@@ -39,7 +39,7 @@
                 Dados extras:
             </legend>
             <label>Raça do Universo 7 preferida:
-                <select required>
+                <select required name="raca" id="raca">
                     <option>Terráqueo</option>
                     <option>Sayajin</option>
                     <option>Namekuseijin</option>
@@ -56,15 +56,15 @@
                 <input type="radio" name="trabalho" value="Goku">Tipo Goku
             </label>
         </fieldset>
-        <fieldset >
+        <fieldset>
             <legend>
                 Seu açai é perfeito de que jeito?
             </legend>
-            <input type="checkbox" name="acai">Puro
-            <input type="checkbox" name="acai">Com Banana
-            <input type="checkbox" name="acai">Com Morango
-            <input type="checkbox" name="acai" onclick="granolah(this)">Com Granola
-            <input type="checkbox" name="acai">Tem gosto de Terra
+            <input type="checkbox" name="fruta" value="puro">Puro
+            <input type="checkbox" name="fruta" value="Banana">Com Banana
+            <input type="checkbox" name="fruta" value="Morango">Com Morango
+            <input type="checkbox" name="fruta" onclick="granolah(this)" value="Granola">Com Granola
+            <input type="checkbox" name="fruta" value="Terra">Tem gosto de Terra
         </fieldset>
         <fieldset>
             <legend>
@@ -78,14 +78,19 @@
         </fieldset>
         <fieldset>
             Observações:<br>
-            <textarea cols="200" rows="8">Escreva suas observações...Eu gosto de açai porque...</textarea>
+            <textarea cols="200" rows="8" required name="obs" id="obs">Escreva suas observações...Eu gosto de açai porque...</textarea>
         </fieldset>
         <div>
             <input type="submit" class="botao" value="ENVIAR">
             <input type="reset" class="botao" value="LIMPAR">
+            <input type="button" onclick="json()" value="Gerar JSON" class="botao">
         </div>
     </form>
+    <pre id="saidajson">
+        
+    </pre>
 </body>
+<script src='_js/script.js'></script>
 <script>
     g = 0
     function granolah() {
@@ -113,7 +118,7 @@
         else if (nome == 'Tenshinhan') {
             document.body.style.backgroundImage = "url('_imagens/Tenshinhan.png')";
         }
-         else if (nome == 'Freeza') {
+        else if (nome == 'Freeza') {
             document.body.style.backgroundImage = "url('_imagens/Frieza_Final-Form.png')";
         }
         else {
@@ -121,6 +126,18 @@
         }
 
     }
+
+    function validarCheckboxes() {
+        const checkboxes = document.querySelectorAll('input[name="fruta"]');
+        const algumMarcado = Array.from(checkboxes).some(cb => cb.checked);
+
+        if (!algumMarcado) {
+            alert("Selecione pelo menos uma opção de fruta!");
+            return false; // impede o envio do formulário
+        }
+        return true;
+    }
+
 </script>
 
 </html>
